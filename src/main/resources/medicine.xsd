@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getMedicineRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getMedicineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="medicine" type="tns:medicine"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="medicine">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="price" type="xs:int"/>
+            <xs:element name="manufacturer" type="xs:string"/>
+            <xs:element name="type" type="tns:type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="liquid"/>
+            <xs:enumeration value="solid"/>
+            <xs:enumeration value="soft"/>
+            <xs:enumeration value="aerosol"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

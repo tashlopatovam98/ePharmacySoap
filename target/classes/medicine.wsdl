@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.baeldung.com/springsoap/gen"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.baeldung.com/springsoap/gen" targetNamespace="http://www.baeldung.com/springsoap/gen">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.baeldung.com/springsoap/gen">
+
+            <xs:element name="getMedicineRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getMedicineResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="medicine" type="tns:medicine" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="medicine">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" />
+                    <xs:element name="price" type="xs:int" />
+                    <xs:element name="manufacturer" type="xs:string" />
+                    <xs:element name="type" type="tns:type" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="type">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="liquid" />
+                    <xs:enumeration value="solid" />
+                    <xs:enumeration value="soft" />
+                    <xs:enumeration value="aerosol" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getMedicineResponse">
+        <wsdl:part element="tns:getMedicineResponse" name="getMedicineResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getMedicineRequest">
+        <wsdl:part element="tns:getMedicineRequest" name="getMedicineRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="MedicinePort">
+        <wsdl:operation name="getMedicine">
+            <wsdl:input message="tns:getMedicineRequest" name="getMedicineRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getMedicineResponse" name="getMedicineResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MedicinePortSoap11" type="tns:MedicinePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="getMedicine">
+            <soap:operation soapAction="" />
+            <wsdl:input name="getMedicineRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="getMedicineResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="MedicinePortService">
+        <wsdl:port binding="tns:MedicinePortSoap11" name="MedicinePortSoap11">
+            <soap:address location="http://localhost:8080/ws" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
